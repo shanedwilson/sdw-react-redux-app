@@ -1,6 +1,5 @@
 import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
-import Loans from './Loans';
 import { fetchLoans } from './loansAPI'
 
 
