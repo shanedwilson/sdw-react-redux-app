@@ -1,0 +1,17 @@
+.grid-container {
+    display: flex;
+    margin: auto;
+    width: 90%
+}
+
+.ag-theme-alpine {
+    width: 100% !important;
+}
+
+.ag-header-cell-label {
+    justify-content: center;
+ }
+
+ .ag-cell {
+    justify-content: center;
+ }
