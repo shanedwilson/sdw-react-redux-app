@@ -1,27 +1,53 @@
-import React, { useEffect, useState } from 'react';
-import { connect, useDispatch, useSelector } from 'react-redux';
-import { AnyAction, bindActionCreators, Dispatch } from 'redux';
+import { AgGridReact, AgGridColumn } from 'ag-grid-react';
+import React from 'react';
+import { connect } from 'react-redux';
+import { AnyAction, Dispatch } from 'redux';
 
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { selectCollateral, setCollateral } from './collateralSlice';
-import styles from './Counter.module.css';
+import { setCollateral } from './collateralSlice';
 
-class Collateral extends React.Component {
+interface ICollateralProps {
+  collateralData: [];
+  setCollateral: Function;
+}
+class Collateral extends React.Component<ICollateralProps> {
     render() {
-        console.log('PROPS: ', this.props)
+        const { collateralData } = this.props
         return(
-            <></>
-        )
+          <div className='grid-container'>
+          <h2>Collateral</h2>
+          {collateralData &&
+              <div className="ag-theme-alpine" style={{height: 400, width: 600}}>
+                  <AgGridReact
+                      rowData={collateralData as any}
+                      immutableData={true}
+                      getRowNodeId={data => data.id}
+                      defaultColDef={{
+                          flex: 1,
+                          resizable: true,
+                          editable: true,
+                      }}
+                      >
+                      <AgGridColumn field="loanId" ></AgGridColumn>
+                      <AgGridColumn field="type"></AgGridColumn>
+                      <AgGridColumn field="value"></AgGridColumn>
+                      <AgGridColumn field="createdDate"></AgGridColumn>
+                      <AgGridColumn field="updatedDate"></AgGridColumn>
+                      <AgGridColumn field="note"></AgGridColumn>
+                  </AgGridReact>
+              </div>
+          } 
+      </div>        
+      )
     }
 
 }
 
-const mapStateToProps = (state: { collateral: any; }) => ({
-    collateral: state.collateral,
+const mapStateToProps = (state: any) => ({
+    collateralData: state.collateral.collateralData,
   })
 
   const mapDispatchToProps = (dispatch: Dispatch<AnyAction>) => ({
     setCollateral: dispatch(setCollateral())
   });
   
-export default connect(mapStateToProps, mapDispatchToProps)(Collateral)
+export default connect<{}>(mapStateToProps, mapDispatchToProps)(Collateral)

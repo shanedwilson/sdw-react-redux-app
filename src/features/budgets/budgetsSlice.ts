@@ -1,5 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { string } from 'yargs';
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
 import { fetchBudgets } from './budgetsAPI'
 
@@ -38,10 +37,15 @@ export interface BudgetsState {
         let data = fetchBudgets() as unknown as Budget[]
         state.budgetsData = data;
       },
+      updateBudget: (state: any, action: PayloadAction<Budget>) => {
+        const budgetsData = current(state).budgetsData
+        const budgetIndex = budgetsData.findIndex((budget: { id: string; }) => budget.id === action.payload.id)
+        state.budgetsData[budgetIndex] = action.payload
+      }
     },
   });
   
-  export const { setBudgets } = budgetsSlice.actions;
+  export const { setBudgets, updateBudget } = budgetsSlice.actions;
 
   export const selectBudgets = (state: RootState) => state.budgets;
   
