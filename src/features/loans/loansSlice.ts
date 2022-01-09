@@ -1,6 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { string } from 'yargs';
+import { createSlice, current, PayloadAction } from '@reduxjs/toolkit';
 import { RootState } from '../../app/store';
+import Loans from './Loans';
 import { fetchLoans } from './loansAPI'
 
 
@@ -36,14 +36,21 @@ export interface LoansState {
     name: 'loans',
     initialState,
     reducers: {
-      setLoans: (state) => {
+      setLoans: (state: { loansData: Loan[] }) => {
         let data = fetchLoans() as unknown as Loan[]
         state.loansData = data;
       },
+      updateLoan: (state: any, action: PayloadAction<Loan>) => {
+        const loansData = current(state).loansData
+        const loanIndex =loansData.findIndex((loan: { id: string; }) => loan.id === action.payload.id)
+        state.loansData[loanIndex] = action.payload
+      }
     },
   });
   
   export const { setLoans } = loansSlice.actions;
+  export const { updateLoan } = loansSlice.actions;
+
 
   export const selectLoans = (state: RootState) => state.loans;
   
