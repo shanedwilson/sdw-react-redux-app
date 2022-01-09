@@ -20,6 +20,7 @@ let collateral = [
 ]
 
 export const fetchCollateral= () => {
+    console.log('FETCH COLLATERAL!!!')
     return collateral
 }
   

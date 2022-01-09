@@ -35,6 +35,7 @@ export interface CollateralState {
     initialState,
     reducers: {
       setCollateral: (state) => {
+        console.log('SET COLLATERAL!!!')
         let data = fetchCollateral() as unknown as Collateral[]
         state.collateralData = data;
       },
