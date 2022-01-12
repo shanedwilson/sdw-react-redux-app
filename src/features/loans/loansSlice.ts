@@ -18,7 +18,7 @@ export interface LoansState {
     loansData: Loan[]
 }
   
-  const initialState: LoansState = {
+export  const initialState: LoansState = {
     loansData: [{
         id: '',
         borrower: '',
